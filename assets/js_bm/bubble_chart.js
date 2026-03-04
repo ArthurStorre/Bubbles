@@ -90,7 +90,8 @@ var yearCenters = { // Center locations of the bubbles.
     2022: { x: 450, y: height / 2 },
     2023: { x: 580, y: height / 2 },
     2024: { x: 680, y: height / 2 },
-    2025: { x: 800, y: height / 2 }
+    2025: { x: 750, y: height / 2 },
+    2026: { x: 800, y: height / 2 }
     
   };
 
@@ -100,7 +101,8 @@ var yearCenters = { // Center locations of the bubbles.
     '2022': 380,
     '2023': 580,
     '2024': 750,
-    '2025': 950
+    '2025': 750,
+    '2026': 950
   };
     
 
@@ -164,7 +166,53 @@ var agecatCenters = { // Center locations of the bubbles.
     'mehr als 5h': 900
   };
     
+  // Fünfter Button: Sorgenbarometer
+ 
+var sorgenCenters = { // Center locations of the bubbles.
+    1: { x: 300, y: height / 2 },
+    2: { x: 500, y: height / 2 },
+    3: { x: 600, y: height / 2 },
+    4: { x: 800, y: height / 2 }
+  };
 
+  var sorgenTitleX = { // X locations of the year titles.
+    'Mache mir Sorgen um meine Daten': 100,
+    'Mache mir eher Sorgen': 400,
+    'Mache mir eher keine Sorgen': 700,
+    'Mache mir keine Sorgen um meine Daten': 1000
+    };
+  
+    // Sechster Button: Griffweite
+    
+    var griffweiteCenters = { // Center locations of the bubbles.
+    1: { x: 250, y: height / 2 },
+    2: { x: 400, y: height / 2 },
+    3: { x: 550, y: height / 2 },
+    4: { x: 850, y: height / 2 }
+  };
+
+  var griffweiteTitleX = { // X locations of the year titles.
+    'Hat Handy beim Schlafen immer in Griffweite': 100,
+    'Hat Handy beim Schlafen eher in Griffweite': 400,
+    'Hat Handy beim Schlafeneher nicht in Griffweite': 700,
+    'Hat Handy nicht in Griffweite': 1000
+    
+    };
+    
+        // Siebter Button: Zeitung
+    
+    var zeitungCenters = { // Center locations of the bubbles.
+    1: { x: 250, y: height / 2 },
+    0: { x: 400, y: height / 2 }
+
+  };
+
+  var zeitungTitleX = { // X locations of the year titles.
+    'Liest Zeitung': 100,
+    'Liest nicht Zeitung': 400
+
+    
+  };
        
     
 //* ------------------------------------------------------------------
@@ -231,8 +279,15 @@ var agecatCenters = { // Center locations of the bubbles.
         agecat: d.kategoriealter,
           
         sex: d.geschlecht,
-          
-       
+        
+        sorgen: d.sorgenbarometer,
+        
+        griffweite: d.griffweite,
+        
+        zeitung: d.zeitung,
+
+        
+        
         
         x: Math.random() * 900,
         y: Math.random() * 800
@@ -329,7 +384,9 @@ var agecatCenters = { // Center locations of the bubbles.
     hideAgecat();
     hideSex();
     hideScreentime();
-
+    hideSorgen();
+    hideGriffweite();
+    hideZeitung();
     
     force.on('tick', function (e) {
       bubbles.each(moveToCenter(e.alpha))
@@ -371,6 +428,9 @@ Die Positionierung basiert auf dem alpha Parameter des force layouts und wird kl
     hideAgecat();
     hideSex();
     hideScreentime();
+   hideSorgen();
+   hideZeitung();
+   hideGriffweite();
 
 
     force.on('tick', function (e) {
@@ -419,6 +479,9 @@ function moveToYear(alpha) {
     hideYear();
     hideSex();
     hideScreentime();
+   hideSorgen();
+   hideGriffweite();
+   hideZeitung();
 
 
     force.on('tick', function (e) {
@@ -467,6 +530,9 @@ function moveToAgecat(alpha) {
     hideYear();
     hideAgecat();
     hideScreentime();
+    hideSorgen();
+    hideGriffweite();
+    hideZeitung();
 
 
     force.on('tick', function (e) {
@@ -515,6 +581,9 @@ function moveToAgecat(alpha) {
     hideYear();
     hideSex();
     hideAgecat();
+    hideSorgen();
+    hideGriffweite();
+    hideZeitung();
 
 
     force.on('tick', function (e) {
@@ -552,7 +621,151 @@ function moveToAgecat(alpha) {
       .text(function (d) { return d; });
     }    
 
+ //* ------------------------------------------------------------------
+//
+// SORGEN
+//
+// -----------------------------------------------------------------*/
+    
+  function splitBubblesintoSorgen() {
+    showSorgen();
+    hideYear();
+    hideSex();
+    hideAgecat();
+    hideScreentime();
+    hideGriffweite();
+    hiedeZeitung();
+
+    force.on('tick', function (e) {
+      bubbles.each(moveToSorgen(e.alpha))
+        .attr('cx', function (d) { return d.x; })
+        .attr('cy', function (d) { return d.y; });
+    });
+
+    force.start();
+  }
+
+  function moveToSorgen(alpha) {
+    return function (d) {
+      var target = sorgenCenters[d.sorgen];
+      d.x = d.x + (target.x - d.x) * damper * alpha * 1.1;
+      d.y = d.y + (target.y - d.y) * damper * alpha * 1.1;
+    };
+  }
+
+  function hideSorgen() {
+    svg.selectAll('.sorgen').remove();
+  }
+
+  function showSorgen() {
+
+    var sorgenData = d3.keys(sorgenTitleX);
+    var sorgen = svg.selectAll('.sorgen')
+      .data(sorgenData);
+
+    sorgen.enter().append('text')
+      .attr('class', 'sorgen')
+      .attr('x', function (d) { return sorgenTitleX[d]; })
+      .attr('y', 65)
+      .attr('text-anchor', 'middle')
+      .text(function (d) { return d; });
+    }    //* ------------------------------------------------------------------
+//
+// GRIFFWEITE
+//
+// -----------------------------------------------------------------*/
+    
+  function splitBubblesintoGriffweite() {
+    showGriffweite();
+    hideYear();
+    hideSex();
+    hideAgecat();
+    hideScreentime();
+    hideSorgen();
+    hideZeitung();
+
+    force.on('tick', function (e) {
+      bubbles.each(moveToGriffweite(e.alpha))
+        .attr('cx', function (d) { return d.x; })
+        .attr('cy', function (d) { return d.y; });
+    });
+
+    force.start();
+  }
+
+  function moveToGriffweite(alpha) {
+    return function (d) {
+      var target = griffweiteCenters[d.griffweite];
+      d.x = d.x + (target.x - d.x) * damper * alpha * 1.1;
+      d.y = d.y + (target.y - d.y) * damper * alpha * 1.1;
+    };
+  }
+
+  function hideGriffweite() {
+    svg.selectAll('.griffweite').remove();
+  }
+
+  function showGriffweite() {
+
+    var griffweiteData = d3.keys(griffweiteTitleX);
+    var griffweite = svg.selectAll('.griffweite')
+      .data(griffweiteData);
+
+    griffweite.enter().append('text')
+      .attr('class', 'griffweite')
+      .attr('x', function (d) { return griffweiteTitleX[d]; })
+      .attr('y', 65)
+      .attr('text-anchor', 'middle')
+      .text(function (d) { return d; });
+    }    
+    // Zeitung
   
+  
+  function splitBubblesintoZeitung() {
+    showZeitung();
+    hideYear();
+    hideSex();
+    hideAgecat();
+    hideScreentime();
+    hideSorgen();
+    hideGriffweite();
+
+    force.on('tick', function (e) {
+      bubbles.each(moveToZeitung(e.alpha))
+        .attr('cx', function (d) { return d.x; })
+        .attr('cy', function (d) { return d.y; });
+    });
+
+    force.start();
+  }
+
+  function moveToZeitung(alpha) {
+    return function (d) {
+      var target = zeitungCenters[d.zeitung];
+      d.x = d.x + (target.x - d.x) * damper * alpha * 1.1;
+      d.y = d.y + (target.y - d.y) * damper * alpha * 1.1;
+    };
+  }
+
+  function hideZeitung() {
+    svg.selectAll('.zeitung').remove();
+  }
+
+  function showZeitung() {
+
+    var zeitungData = d3.keys(zeitungTitleX);
+    var zeitung = svg.selectAll('.zeitung')
+      .data(zeitungData);
+
+    zeitung.enter().append('text')
+      .attr('class', 'zeitung')
+      .attr('x', function (d) { return zeitungTitleX[d]; })
+      .attr('y', 65)
+      .attr('text-anchor', 'middle')
+      .text(function (d) { return d; });
+    }  
+
+   
     
     
 //* ------------------------------------------------------------------
@@ -580,6 +793,12 @@ function moveToAgecat(alpha) {
       splitBubblesintoSex();
     } else if (displayName === 'screentime') {
       splitBubblesintoScreentime();
+    } else if (displayName === 'sorgen') {
+      splitBubblesintoSorgen();    
+    } else if (displayName === 'griffweite') {
+      splitBubblesintoGriffweite();
+    } else if (displayName === 'zeitung') {
+      splitBubblesintoZeitung();
     } else {
       groupBubbles();
     }
@@ -626,7 +845,15 @@ function moveToAgecat(alpha) {
                   '<span class="name">Bildschirmzeit: </span><span class="value">' +
                   d.screentime +
                   '</span><br/>' +
-                  '<span class="name">"Umfragejahr": </span><span class="value">' +
+                  '<span class="name">Ich mache mir Sorgen um meine Daten: </span><span class="value">' +
+                  d.sorgen +
+                  '</span><br/>' +
+                  '<span class="name">Ich habe mein Handy beim Schlafen in Griffweite: </span><span class="value">' +
+                  d.griffweite +
+                  '</span><br/>' +
+                  '<span class="name">Ich lese regelmässig Zeitung: </span><span class="value">' +
+                  d.zeitung +
+                  '</span><br/>' +
                   d.year +
                   '</span>';
     tooltip2.showtooltip2(content, d3.event);
