@@ -198,8 +198,27 @@ var sorgenCenters = { // Center locations of the bubbles.
     'Hat Handy nicht in Griffweite': 1000
     
     };
+  
     
-        // Siebter Button: Zeitung
+  
+    // Siebter Button: Zeitungonline
+    
+    var zeitungonlineCenters = { // Center locations of the bubbles.
+    1: { x: 250, y: height / 2 },
+    2: { x: 400, y: height / 2 },
+    3: { x: 550, y: height / 2 },
+    4: { x: 850, y: height / 2 }
+  };
+
+  var zeitungonlineTitleX = { // X locations of the year titles.
+    'Ja ich lese Zeitung online': 100,
+    'Nein ich lese Zeitung gedruckt': 400,
+    'Ich lese online sowie gedruckt Zeitung': 700,
+    'Ich lese keine Zeitung': 1000
+    
+    };
+    
+        // Achter Button: Zeitung
     
     var zeitungCenters = { // Center locations of the bubbles.
     1: { x: 250, y: height / 2 },
@@ -208,11 +227,28 @@ var sorgenCenters = { // Center locations of the bubbles.
   };
 
   var zeitungTitleX = { // X locations of the year titles.
-    'Liest Zeitung': 100,
-    'Liest nicht Zeitung': 400
+    'Liest Zeitung': 200,
+    'Liest nicht Zeitung': 450
 
     
   };
+     
+  // Neunter Button: Zeitungalter
+    
+    var zeitungalterCenters = { // Center locations of the bubbles.
+    1: { x: 250, y: height / 2 },
+    2: { x: 400, y: height / 2 },
+    3: { x: 550, y: height / 2 },
+    4: { x: 850, y: height / 2 }
+  };
+
+  var zeitungalterTitleX = { // X locations of the year titles.
+    'Ja ich lese Zeitung und bin jung': 100,
+    'Nein ich lese nicht Zeitung und bin jung': 400,
+    'Ja ich lese Zeitung und bin Erwachsen': 700,
+    'Nein ich lese nicht Zeitung und bin Erwachsen': 1000
+    
+    };
        
     
 //* ------------------------------------------------------------------
@@ -285,6 +321,12 @@ var sorgenCenters = { // Center locations of the bubbles.
         griffweite: d.griffweite,
         
         zeitung: d.zeitung,
+        
+        zeitungonline: d.zeitungonline,
+        
+        zeitungalter: d.zeitungalter,
+        
+        
 
         
         
@@ -387,6 +429,8 @@ var sorgenCenters = { // Center locations of the bubbles.
     hideSorgen();
     hideGriffweite();
     hideZeitung();
+    hideZeitungonline();
+    hideZeitungalter();
     
     force.on('tick', function (e) {
       bubbles.each(moveToCenter(e.alpha))
@@ -431,6 +475,8 @@ Die Positionierung basiert auf dem alpha Parameter des force layouts und wird kl
    hideSorgen();
    hideZeitung();
    hideGriffweite();
+   hideZeitungonline();
+   hideZeitungalter();
 
 
     force.on('tick', function (e) {
@@ -482,6 +528,8 @@ function moveToYear(alpha) {
    hideSorgen();
    hideGriffweite();
    hideZeitung();
+   hideZeitungonline();
+   hideZeitungalter();
 
 
     force.on('tick', function (e) {
@@ -533,6 +581,8 @@ function moveToAgecat(alpha) {
     hideSorgen();
     hideGriffweite();
     hideZeitung();
+    hideZeitungonline();
+    hideZeitungalter();
 
 
     force.on('tick', function (e) {
@@ -584,6 +634,8 @@ function moveToAgecat(alpha) {
     hideSorgen();
     hideGriffweite();
     hideZeitung();
+    hideZeitungonline();
+    hideZeitungalter();
 
 
     force.on('tick', function (e) {
@@ -634,7 +686,10 @@ function moveToAgecat(alpha) {
     hideAgecat();
     hideScreentime();
     hideGriffweite();
-    hiedeZeitung();
+    hideZeitung();
+    hideZeitungonline();
+    hideZeitungalter();
+    
 
     force.on('tick', function (e) {
       bubbles.each(moveToSorgen(e.alpha))
@@ -683,6 +738,9 @@ function moveToAgecat(alpha) {
     hideScreentime();
     hideSorgen();
     hideZeitung();
+    hideZeitungonline();
+    hideZeitungonline();
+    hideZeitungalter();
 
     force.on('tick', function (e) {
       bubbles.each(moveToGriffweite(e.alpha))
@@ -718,8 +776,8 @@ function moveToAgecat(alpha) {
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
     }    
-    // Zeitung
-  
+
+  // Zeitung
   
   function splitBubblesintoZeitung() {
     showZeitung();
@@ -729,6 +787,8 @@ function moveToAgecat(alpha) {
     hideScreentime();
     hideSorgen();
     hideGriffweite();
+    hideZeitungonline();
+    hideZeitungalter();
 
     force.on('tick', function (e) {
       bubbles.each(moveToZeitung(e.alpha))
@@ -764,6 +824,112 @@ function moveToAgecat(alpha) {
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
     }  
+  
+
+
+
+
+// Zeitungonline
+//
+// -----------------------------------------------------------------*/
+    
+  function splitBubblesintoZeitungonline() {
+    showZeitungonline();
+    hideYear();
+    hideSex();
+    hideAgecat();
+    hideScreentime();
+    hideSorgen();
+    hideZeitung();
+    hideGriffweite();
+    hideZeitungalter();
+    
+
+    force.on('tick', function (e) {
+      bubbles.each(moveToZeitungonline(e.alpha))
+        .attr('cx', function (d) { return d.x; })
+        .attr('cy', function (d) { return d.y; });
+    });
+
+    force.start();
+  }
+
+  function moveToZeitungonline(alpha) {
+    return function (d) {
+      var target = zeitungonlineCenters[d.griffweite];
+      d.x = d.x + (target.x - d.x) * damper * alpha * 1.1;
+      d.y = d.y + (target.y - d.y) * damper * alpha * 1.1;
+    };
+  }
+
+  function hideZeitungonline() {
+    svg.selectAll('.zeitungonline').remove();
+  }
+
+  function showZeitungonline() {
+
+    var zeitungonlineData = d3.keys(zeitungonlineTitleX);
+    var zeitungonline = svg.selectAll('.zeitungonline')
+      .data(zeitungonlineData);
+
+    zeitungonline.enter().append('text')
+      .attr('class', 'zeitungonline')
+      .attr('x', function (d) { return zeitungonlineTitleX[d]; })
+      .attr('y', 65)
+      .attr('text-anchor', 'middle')
+      .text(function (d) { return d; });
+    }    
+  
+  // Zeitungalter
+//
+// -----------------------------------------------------------------*/
+    
+  function splitBubblesintoZeitungalter() {
+    showZeitungalter();
+    hideYear();
+    hideSex();
+    hideAgecat();
+    hideScreentime();
+    hideSorgen();
+    hideZeitung();
+    hideGriffweite();
+    hideZeitungonline();
+    
+
+    force.on('tick', function (e) {
+      bubbles.each(moveToZeitungalter(e.alpha))
+        .attr('cx', function (d) { return d.x; })
+        .attr('cy', function (d) { return d.y; });
+    });
+
+    force.start();
+  }
+
+  function moveToZeitungalter(alpha) {
+    return function (d) {
+      var target = zeitungalterCenters[d.zeitungalter];
+      d.x = d.x + (target.x - d.x) * damper * alpha * 1.1;
+      d.y = d.y + (target.y - d.y) * damper * alpha * 1.1;
+    };
+  }
+
+  function hideZeitungalter() {
+    svg.selectAll('.zeitungalter').remove();
+  }
+
+  function showZeitungalter() {
+
+    var zeitungalterData = d3.keys(zeitungalterTitleX);
+    var zeitungalter = svg.selectAll('.zeitungalter')
+      .data(zeitungalterData);
+
+    zeitungalter.enter().append('text')
+      .attr('class', 'zeitungalter')
+      .attr('x', function (d) { return zeitungalterTitleX[d]; })
+      .attr('y', 65)
+      .attr('text-anchor', 'middle')
+      .text(function (d) { return d; });
+    }    
 
    
     
@@ -799,6 +965,10 @@ function moveToAgecat(alpha) {
       splitBubblesintoGriffweite();
     } else if (displayName === 'zeitung') {
       splitBubblesintoZeitung();
+    } else if (displayName === 'zeitungonline') {
+      splitBubblesintoZeitungonline();
+    } else if (displayName === 'zeitungalter') {
+      splitBubblesintoZeitungalter();
     } else {
       groupBubbles();
     }
@@ -853,6 +1023,12 @@ function moveToAgecat(alpha) {
                   '</span><br/>' +
                   '<span class="name">Ich lese regelmässig Zeitung: </span><span class="value">' +
                   d.zeitung +
+                  '</span><br/>' +
+                  '<span class="name">Ich lese Zeitung digital: </span><span class="value">' +
+                  d.zeitungonline +
+                  '</span><br/>' +
+                  '<span class="name">Ich lese Zeitung und bin alt oder jung: </span><span class="value">' +
+                  d.zeitungalter +
                   '</span><br/>' +
                   d.year +
                   '</span>';
