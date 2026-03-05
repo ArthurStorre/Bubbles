@@ -187,7 +187,7 @@ var sorgenCenters = { // Center locations of the bubbles.
     var griffweiteCenters = { // Center locations of the bubbles.
     1: { x: 250, y: height / 2 },
     2: { x: 400, y: height / 2 },
-    3: { x: 550, y: height / 2 },
+    3: { x: 600, y: height / 2 },
     4: { x: 850, y: height / 2 }
   };
 
@@ -206,7 +206,7 @@ var sorgenCenters = { // Center locations of the bubbles.
     var zeitungonlineCenters = { // Center locations of the bubbles.
     1: { x: 250, y: height / 2 },
     2: { x: 400, y: height / 2 },
-    3: { x: 550, y: height / 2 },
+    3: { x: 600, y: height / 2 },
     4: { x: 850, y: height / 2 }
   };
 
@@ -221,13 +221,13 @@ var sorgenCenters = { // Center locations of the bubbles.
         // Achter Button: Zeitung
     
     var zeitungCenters = { // Center locations of the bubbles.
-    1: { x: 250, y: height / 2 },
-    0: { x: 400, y: height / 2 }
+    1: { x: 250, y: height / 1.8 },
+    0: { x: 400, y: height / 1.8 }
 
   };
 
   var zeitungTitleX = { // X locations of the year titles.
-    'Liest Zeitung': 200,
+    'Liest Zeitung': 180,
     'Liest nicht Zeitung': 450
 
     
@@ -236,15 +236,15 @@ var sorgenCenters = { // Center locations of the bubbles.
   // Neunter Button: Zeitungalter
     
     var zeitungalterCenters = { // Center locations of the bubbles.
-    1: { x: 250, y: height / 2 },
-    2: { x: 400, y: height / 2 },
-    3: { x: 550, y: height / 2 },
-    4: { x: 850, y: height / 2 }
+    1: { x: 250, y: height / 1.8 },
+    2: { x: 400, y: height / 1.8 },
+    3: { x: 550, y: height / 1.8 },
+    4: { x: 850, y: height / 1.8 }
   };
 
   var zeitungalterTitleX = { // X locations of the year titles.
     'Ja ich lese Zeitung und bin jung': 100,
-    'Nein ich lese nicht Zeitung und bin jung': 400,
+    'Nein ich lese nicht Zeitung und bin jung': 420,
     'Ja ich lese Zeitung und bin Erwachsen': 700,
     'Nein ich lese nicht Zeitung und bin Erwachsen': 1000
     
