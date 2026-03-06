@@ -86,7 +86,7 @@ function bubbleChart() {
  
 var yearCenters = { // Center locations of the bubbles.
     
-    2021: { x: 280, y: height / 2 },
+    2021: { x: 250, y: height / 2 },
     2022: { x: 450, y: height / 2 },
     2023: { x: 580, y: height / 2 },
     2024: { x: 680, y: height / 2 },
@@ -221,14 +221,14 @@ var sorgenCenters = { // Center locations of the bubbles.
         // Achter Button: Zeitung
     
     var zeitungCenters = { // Center locations of the bubbles.
-    1: { x: 250, y: height / 1.8 },
-    0: { x: 400, y: height / 1.8 }
+    1: { x: 400, y: height / 1.8 },
+    0: { x: 650, y: height / 1.8 }
 
   };
 
   var zeitungTitleX = { // X locations of the year titles.
-    'Liest Zeitung': 180,
-    'Liest nicht Zeitung': 450
+    'Liest Zeitung': 380,
+    'Liest nicht Zeitung': 700
 
     
   };
@@ -999,7 +999,7 @@ function moveToAgecat(alpha) {
 
   var fillColor = d3.scale.ordinal()
     .domain(['1','2','3', '4','5','6'])
-    .range(['#F7CAD0', '#ff006e', '#48CAE4', '#0096C7','#023E8A','#03045E']);
+    .range(['#161925', '#23395B', '#406E8E', '#8EA8C3','#CBF7ED','#678BA9']);
 
   /* Tooltip-Funktion*/
   function showDetail(d) {
